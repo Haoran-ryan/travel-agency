@@ -1,17 +1,10 @@
 import React from 'react'
 import {Header, StatsCard, TripCard} from "../../../components";
+import { dashboardStats, allTrips, users } from '../../constants';
+const user = { name: 'Ryan Guo'}
+const { totalUsers, usersJoined, totalTrips, tripsCreated, userRole } = dashboardStats
 
 const Dashboard = () => {
-    const user = { name: 'Ryan Guo'}
-    const dashboardStats = {
-        totalUsers: 12450,
-        usersJoined:{ currentMonthCount: 218, lastMonthCount: 176},
-        totalTrips: 3210,
-        tripsCreated:{ currentMonthCount: 218, lastMonthCount: 376},
-        userRole: { total: 62, currentMonthCount: 25, lastMonthCount: 15},
-    }
-
-    const { totalUsers, usersJoined, totalTrips, tripsCreated, userRole } = dashboardStats
 
     return (
         <main className='dashboard wrapper'>
@@ -39,9 +32,25 @@ const Dashboard = () => {
                         currentMonthCount={userRole.currentMonthCount}
                         lastMonthCount={userRole.lastMonthCount}
                     />
-                    <TripCard />
 
+                </div>
+            </section>
 
+            {/*TripCard render*/}
+            <section className='container'>
+                <h1 className='text-xl font-semibold text-dark-100'>Created Trips</h1>
+                <div className='trip-grid'>
+                    {allTrips.slice(0, 4).map(({id, name, imageUrls, itinerary, tags, estimatedPrice} ) => (
+                        <TripCard
+                            key={id}
+                            id={id.toString()}
+                            name={name}
+                            imageUrls={imageUrls[0]}
+                            location={itinerary?.[0]?.location??''}
+                            tags={tags}
+                            price={estimatedPrice}
+                        />
+                    ))}
                 </div>
             </section>
         </main>
